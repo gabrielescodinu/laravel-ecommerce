@@ -63,7 +63,7 @@ class LoginController extends Controller
                 $cartItem->save();
             }
     
-            return redirect()->intended('/cart');
+            return redirect()->intended('/home');
         }
     
         return back()->withErrors([

@@ -6,7 +6,10 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">Categories</div>
-
+                    <div class="card-body">
+                        <a class="btn btn-secondary" href="{{ route('home') }}">Back to Home</a>
+                        <a href="{{ route('categories.create') }}" class="btn btn-primary">Add Category</a>
+                    </div>
                     <div class="card-body">
                         <table class="table">
                             <thead>

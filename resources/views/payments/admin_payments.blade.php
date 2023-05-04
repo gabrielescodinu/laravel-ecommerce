@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container">
+        <a class="btn btn-secondary mb-3" href="{{ route('home') }}">Back to Home</a>
         <h1>All Payments</h1>
         <table class="table table-striped">
             <thead>

@@ -5,6 +5,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h1>Products</h1>
+                <a class="btn btn-secondary mb-3" href="{{ route('home') }}">Back to Home</a>
                 <a class="btn btn-primary mb-3" href="{{ route('products.create') }}">Create Product</a>
                 <table class="table">
                     <thead>

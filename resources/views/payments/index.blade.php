@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container">
+        <a class="btn btn-secondary mb-3" href="{{ route('home') }}">Back to Home</a>
         <h1>Your Payment History</h1>
         @foreach ($payments as $date => $paymentsGroup)
             <h2>{{ $date }}</h2>

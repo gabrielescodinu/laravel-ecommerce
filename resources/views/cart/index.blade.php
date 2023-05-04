@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container">
+        <a class="btn btn-secondary mb-3" href="{{ route('home') }}">Back to Home</a>
         <h1>Your Cart</h1>
         <table class="table">
             <thead>
@@ -48,8 +49,11 @@
                     <td colspan="4" class="text-right">Total:</td>
                     <td>{{ $total }}</td>
                     <td></td>
+                    if total is greater than 0, show checkout button
                     <td>
-                        <a href="{{ route('checkout') }}" class="btn btn-primary">Checkout</a>
+                        @if ($total > 0)
+                            <a href="{{ route('checkout') }}" class="btn btn-primary">Checkout</a>
+                        @endif
                     </td>
                 </tr>
             </tfoot>

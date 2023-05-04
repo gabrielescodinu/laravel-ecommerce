@@ -7,15 +7,13 @@
         <p>{{ $product->description }}</p>
         <p>Price: {{ $product->price }}</p>
         <p>Category: {{ $product->category->name }}</p>
-        <img class="img-thumbnail" src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}"
-            style="max-height: 200px">
+        <img class="img-thumbnail" src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" style="max-height: 200px">
+        
+        <form method="POST" action="{{ route('cart.add', $product->id) }}">
+            @csrf
+            <button type="submit" class="btn btn-success">Add to cart</button>
+        </form>
     </div>
 
-    <form method="POST" action="{{ route('cart.add', $product->id) }}">
-        @csrf
-        <input type="hidden" name="product_id" value="{{ $product->id }}">
-        <input type="number" name="quantity" value="1">
-        <button type="submit">Add to cart</button>
-    </form>
     
 @endsection
