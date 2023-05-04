@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 
 
 class CartController extends Controller
@@ -53,5 +54,27 @@ class CartController extends Controller
         $cartItem->delete();
 
         return redirect()->route('cart.index')->with('success', 'Product removed from cart!');
+    }
+
+    public function increaseQuantity(Cart $cartItem)
+    {
+        $cartItem->quantity += 1;
+        $cartItem->total = $cartItem->quantity * $cartItem->price;
+        $cartItem->save();
+
+        return redirect()->route('cart.index')->with('success', 'Product quantity increased!');
+    }
+
+    public function decreaseQuantity(Cart $cartItem)
+    {
+        if ($cartItem->quantity > 1) {
+            $cartItem->quantity -= 1;
+            $cartItem->total = $cartItem->quantity * $cartItem->price;
+            $cartItem->save();
+        } else {
+            $cartItem->delete();
+        }
+
+        return redirect()->route('cart.index')->with('success', 'Product quantity decreased!');
     }
 }

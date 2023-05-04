@@ -49,11 +49,13 @@ Route::middleware('admin')->group(function () {
 Route::get('/public/products', [ProductController::class, 'publicView'])->name('products.publicView');
 Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
 
+// cart routes
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
-Route::patch('/cart/update/{product}', [CartController::class, 'update'])->name('cart.update');
-Route::delete('/cart/remove/{product}', [CartController::class, 'remove'])->name('cart.remove');
-Route::delete('/cart/destroy', [CartController::class, 'destroy'])->name('cart.destroy');
+Route::delete('/cart/{cartItem}', [CartController::class, 'remove'])->name('cart.remove');
+Route::post('/cart/{cartItem}/increase', [CartController::class, 'increaseQuantity'])->name('cart.increase');
+Route::post('/cart/{cartItem}/decrease', [CartController::class, 'decreaseQuantity'])->name('cart.decrease');
+
 
 
 Route::middleware('auth')->group(function () {
