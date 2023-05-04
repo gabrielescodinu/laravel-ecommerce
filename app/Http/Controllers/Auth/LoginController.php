@@ -45,26 +45,33 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
-
+    
+        // Store the previous session ID
+        $previousSessionId = session()->getId();
+    
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
-            $userSessionId = session()->getId();
-
-            // retrieve cart items for user session
-            $cartItems = Cart::where('user_session_id', $userSessionId)->get();
-
-            // update cart items with user id and remove user session id
+    
+            // Get the new session ID
+            $newSessionId = session()->getId();
+    
+            // Update the cart items with the new session ID
+            $cartItems = Cart::where('user_session_id', $previousSessionId)->get();
             foreach ($cartItems as $cartItem) {
                 $cartItem->user_id = $user->id;
-                $cartItem->user_session_id = null;
+                $cartItem->user_session_id = $newSessionId;
                 $cartItem->save();
             }
-
-            return redirect()->intended('/dashboard');
+    
+            return redirect()->intended('/cart');
         }
-
+    
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
         ]);
     }
+    
+    
+    
+    
 }
