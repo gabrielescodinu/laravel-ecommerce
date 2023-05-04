@@ -48,6 +48,9 @@
                     <td colspan="4" class="text-right">Total:</td>
                     <td>{{ $total }}</td>
                     <td></td>
+                    <td>
+                        <a href="{{ route('checkout') }}" class="btn btn-primary">Checkout</a>
+                    </td>
                 </tr>
             </tfoot>
         </table>

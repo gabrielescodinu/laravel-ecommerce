@@ -8,6 +8,10 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\Request;
+use App\Models\Cart;
 
 class RegisterController extends Controller
 {
@@ -40,6 +44,34 @@ class RegisterController extends Controller
     {
         $this->middleware('guest');
     }
+
+    protected function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        // Store the previous session ID
+        $previousSessionId = session()->getId();
+
+        $user = $this->create($request->all());
+
+        event(new Registered($user));
+
+        Auth::login($user);
+
+        // Get the new session ID
+        $newSessionId = session()->getId();
+
+        // Update the cart items with the new session ID
+        $cartItems = Cart::where('user_session_id', $previousSessionId)->get();
+        foreach ($cartItems as $cartItem) {
+            $cartItem->user_id = $user->id;
+            $cartItem->user_session_id = $newSessionId;
+            $cartItem->save();
+        }
+
+        return redirect(RouteServiceProvider::HOME);
+    }
+
 
     /**
      * Get a validator for an incoming registration request.

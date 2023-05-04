@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,7 +57,9 @@ Route::delete('/cart/{cartItem}', [CartController::class, 'remove'])->name('cart
 Route::post('/cart/{cartItem}/increase', [CartController::class, 'increaseQuantity'])->name('cart.increase');
 Route::post('/cart/{cartItem}/decrease', [CartController::class, 'decreaseQuantity'])->name('cart.decrease');
 
-
+// checkout routes
+Route::get('/checkout', [CheckoutController::class, 'showCheckoutForm'])->name('checkout');
+Route::post('/checkout', [CheckoutController::class, 'processPayment'])->name('checkout.process');
 
 Route::middleware('auth')->group(function () {
 });
