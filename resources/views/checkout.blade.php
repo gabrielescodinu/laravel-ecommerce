@@ -1,31 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout</title>
-    <script src="https://js.stripe.com/v3/"></script>
-</head>
+@section('content')
+    <div class="container">
+        <a class="btn btn-secondary mb-3" href="{{ route('cart.index') }}">Back to Cart</a>
+        <h1>Checkout</h1>
+        <h4>Your Total: ${{ $total }}</h4>
+        <form action="{{ route('checkout.process') }}" method="post" id="payment-form">
+            @csrf
+            <div>
+                <label for="card-element">
+                    Credit or debit card
+                </label>
+                <div id="card-element">
+                    <!-- A Stripe Element will be inserted here. -->
+                </div>
 
-<body>
-    <h1>Checkout</h1>
-    <form action="{{ route('checkout.process') }}" method="post" id="payment-form">
-        @csrf
-        <div>
-            <label for="card-element">
-                Credit or debit card
-            </label>
-            <div id="card-element">
-                <!-- A Stripe Element will be inserted here. -->
+                <!-- Used to display form errors. -->
+                <div id="card-errors" role="alert"></div>
             </div>
 
-            <!-- Used to display form errors. -->
-            <div id="card-errors" role="alert"></div>
-        </div>
-
-        <button>Submit Payment</button>
-    </form>
+            <button class="btn btn-primary mt-3">Submit Payment</button>
+        </form>
+    </div>
 
     <script>
         // Create a Stripe client
@@ -75,6 +71,4 @@
             });
         });
     </script>
-</body>
-
-</html>
+@endsection

@@ -13,7 +13,13 @@ class CheckoutController extends Controller
 {
     public function showCheckoutForm()
     {
-        return view('checkout');
+        $cartItems = Cart::where('user_id', Auth::id())
+        ->orWhere('user_session_id', session()->getId())
+        ->get();
+
+        $total = $cartItems->sum('total');
+
+        return view('checkout', compact('cartItems', 'total'));
     }
 
     public function processPayment(Request $request)

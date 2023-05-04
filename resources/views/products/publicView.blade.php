@@ -29,7 +29,6 @@
                         <td>
                             <a class="btn btn-sm btn-info" href="{{ route('products.show', $product->id) }}">View</a>
                         </td>
-
                     </tr>
                 @endforeach
             </tbody>
