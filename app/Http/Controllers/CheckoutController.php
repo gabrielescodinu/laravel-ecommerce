@@ -7,6 +7,7 @@ use App\Models\Cart;
 use Illuminate\Support\Facades\Auth;
 use Stripe\Stripe;
 use Stripe\Charge;
+use App\Models\Payment;
 
 class CheckoutController extends Controller
 {
@@ -32,8 +33,19 @@ class CheckoutController extends Controller
             'description' => 'Payment from ' . Auth::user()->email,
         ]);
 
-        // Clear the cart after successful payment
+        // Save cart items as payments
         foreach ($cartItems as $item) {
+            Payment::create([
+                'user_id' => Auth::id(),
+                'product_id' => $item->product_id,
+                'name' => $item->name,
+                'description' => $item->description,
+                'price' => $item->price,
+                'quantity' => $item->quantity,
+                'total' => $item->total,
+            ]);
+
+            // Clear the cart item after saving as payment
             $item->delete();
         }
 
