@@ -19,7 +19,7 @@
                 @foreach ($payments as $payment)
                     <tr>
                         <td>{{ $payment->user->name }}</td>
-                        <td>{{ $payment->name }}</td>
+                        <td>{{ $payment->product->name }}</td>
                         <td>{{ $payment->quantity }}</td>
                         <td>{{ $payment->price }}</td>
                         <td>{{ $payment->total }}</td>

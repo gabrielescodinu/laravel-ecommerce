@@ -8,7 +8,6 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Product ID</th>
                         <th>Name</th>
                         <th>Price</th>
                         <th>Quantity</th>
@@ -18,8 +17,7 @@
                 <tbody>
                     @foreach ($paymentsGroup as $payment)
                         <tr>
-                            <td>{{ $payment->product_id }}</td>
-                            <td>{{ $payment->name }}</td>
+                            <td>{{ $payment->product->name }}</td>
                             <td>{{ $payment->price }}</td>
                             <td>{{ $payment->quantity }}</td>
                             <td>{{ $payment->total }}</td>

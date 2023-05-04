@@ -14,14 +14,14 @@ class PaymentController extends Controller
             return redirect()->route('home')->withErrors(['unauthorized' => 'You are not authorized to view this page.']);
         }
     
-        $payments = Payment::with('user')->orderBy('created_at', 'desc')->get();
+        $payments = Payment::with('user', 'product')->orderBy('created_at', 'desc')->get();
         return view('payments.admin_payments', compact('payments'));
     }
     
     
     public function index()
     {
-        $payments = Payment::where('user_id', Auth::id())
+        $payments = Payment::where('user_id', Auth::id())->with('product')
             ->orderBy('created_at', 'desc')
             ->get()
             ->groupBy(function ($payment) {
