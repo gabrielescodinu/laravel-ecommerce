@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +45,9 @@ Route::middleware('admin')->group(function () {
     Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
     Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
     Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+    
+    // payment routes
+    Route::get('/admin/payments', [PaymentController::class, 'adminPayments'])->name('admin.payments');
 });
 
 // public product routes
@@ -57,9 +61,13 @@ Route::delete('/cart/{cartItem}', [CartController::class, 'remove'])->name('cart
 Route::post('/cart/{cartItem}/increase', [CartController::class, 'increaseQuantity'])->name('cart.increase');
 Route::post('/cart/{cartItem}/decrease', [CartController::class, 'decreaseQuantity'])->name('cart.decrease');
 
-// checkout routes
-Route::get('/checkout', [CheckoutController::class, 'showCheckoutForm'])->name('checkout');
-Route::post('/checkout', [CheckoutController::class, 'processPayment'])->name('checkout.process');
 
-Route::middleware('auth')->group(function () {
+
+Route::middleware(['auth'])->group(function () {
+    // checkout routes
+    Route::get('/checkout', [CheckoutController::class, 'showCheckoutForm'])->name('checkout');
+    Route::post('/checkout', [CheckoutController::class, 'processPayment'])->name('checkout.process');
+
+    // payment routes
+    Route::get('/payments', [PaymentController::class, 'index'])->name('payments.index');
 });

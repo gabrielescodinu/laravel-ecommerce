@@ -18,4 +18,9 @@ class Payment extends Model
         'quantity',
         'total',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
